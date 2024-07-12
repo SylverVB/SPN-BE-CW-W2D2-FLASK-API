@@ -54,6 +54,9 @@ jobs:
           python -m pip install -U pip
           python -m pip install -r requirements.txt
 
+      - name: Run any database migrations
+        run: flask db upgrade
+
       - name: Run the tests
         run: python -m unittest discover -v -s .
   
