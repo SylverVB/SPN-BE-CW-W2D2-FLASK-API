@@ -1,0 +1,67 @@
+swagger: '2.0'
+info:
+  title: 'E-Commerce API'
+  version: 1.0.0
+host: 'localhost:5000'
+schemes:
+  - 'http'
+  # - 'https'
+consumes:
+  - 'application/json'
+produces:
+  - 'application/json'
+paths:
+  /token:
+    post:
+      summary: "Token Endpoint"
+      description: "Endpoint for authenticating customers"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Credentials for login"
+          required: true
+          schema:
+            $ref: "#/definitions/TokenCredentials"
+      responses:
+        200:
+          description: "Login Successful"
+          schema:
+            $ref: "#/definitions/TokenResponse"
+          examples:
+            application/json:
+              token: "eyJhbXciOiJIUzI1NiIsInR5cCI4IkpXVCJ9.eyJleHAiOdE3MjAyMDI4OTIsImlhdCI6MTcyMDE5OTI5MiwiY3VzdG9tZXJfaWQiOjF9.VFX4LERNh3tymGZkgJmXVIrrRbbKJzmb96ax03Z2Mhq"
+        401:
+          description: "Unsuccessful login"
+          schema:
+            $ref: "#/definitions/TokenResponse"
+          examples:
+            application/json:
+              error: "Username and/or password is incorrect"
+
+definitions:
+  TokenCredentials:
+    type: "object"
+    properties:
+      username:
+        type: "string"
+        description: "The username of the customer"
+      password:
+        type: "string"
+        description: "The password associated with the customer"
+        format: "password"
+    required:
+      - "username"
+      - "password"
+  TokenResponse:
+    type: "object"
+    properties:
+      token:
+        type: "string"
+        description: "Authenticated token"
+      error:
+        type: "string"
+        description: "The error that caused unsuccessful login"
+
+
+
+
